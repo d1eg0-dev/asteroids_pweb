@@ -13,7 +13,8 @@ let ship = {
 let keys = {};
 let asteroids = [];
 let asteroidTimer = 0;
-let asteroidInterval = 130; 
+let asteroidInterval = 130;
+let maxAsteroids = 8; 
 
 document.addEventListener("keydown", (e) => {
   keys[e.key] = true;
@@ -84,8 +85,6 @@ function updateShip() {
   if (ship.y > canvas.height) ship.y = 0;
 }
 
-
-
 function createAsteroid() {
   let side = Math.floor(Math.random() * 4);
   let x, y;
@@ -155,7 +154,7 @@ function createAsteroid() {
 function spawnAsteroids() {
   asteroidTimer++;
 
-  if (asteroidTimer >= asteroidInterval) {
+  if (asteroidTimer >= asteroidInterval && asteroids.length < maxAsteroids) {
     createAsteroid();
     asteroidTimer = 0;
   }
@@ -193,8 +192,6 @@ function getSpeedBySize(sizeType) {
   }
 }
 
-
-
 function updateAsteroids() {
   for (let i = 0; i < asteroids.length; i++) {
     let asteroid = asteroids[i];
@@ -217,8 +214,6 @@ function updateAsteroids() {
     }
   }
 }
-
-
 
 function drawAsteroids() {
   for (let i = 0; i < asteroids.length; i++) {
@@ -283,8 +278,6 @@ function drawAsteroidDetails(asteroid) {
   context.stroke();
 }
 
-
-
 function handleAsteroidCollisions() {
   for (let i = 0; i < asteroids.length; i++) {
     for (let j = i + 1; j < asteroids.length; j++) {
@@ -325,14 +318,11 @@ function handleAsteroidCollisions() {
   }
 }
 
-
 function drawInfo() {
   context.fillStyle = "white";
   context.font = "18px Arial";
   context.fillText("Controles: ← → rotar, ↑ avanzar", 20, 30);
 }
-
-
 
 function getDistance(x1, y1, x2, y2) {
   let dx = x2 - x1;
