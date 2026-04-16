@@ -1,4 +1,4 @@
-const canvas = document.getElementById("gameCanvas");
+const canvas = document.getElementById("gameAsteroidsPw");
 const context = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
@@ -14,6 +14,15 @@ let keys = {};
 let asteroids = [];
 let asteroidTimer = 0;
 let asteroidInterval = 130; 
+let stars = [];
+
+for (let i = 0; i < 300; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2
+  });
+}
 
 document.addEventListener("keydown", (e) => {
   keys[e.key] = true;
@@ -30,13 +39,13 @@ window.addEventListener("resize", () => {
 
 function gameLoop() {
   context.clearRect(0, 0, canvas.width, canvas.height);
-
+  drawShip();
   updateShip();
+  drawStars();
+
   spawnAsteroids();
   updateAsteroids();
   handleAsteroidCollisions();
-
-  drawShip();
   drawAsteroids();
   drawInfo();
 
@@ -342,4 +351,13 @@ function getDistance(x1, y1, x2, y2) {
 
 function randomRange(min, max) {
   return Math.random() * (max - min) + min;
+}
+function drawStars() {
+  context.fillStyle = "white";
+
+  stars.forEach(star => {
+    context.beginPath();
+    context.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+    context.fill();
+  });
 }
