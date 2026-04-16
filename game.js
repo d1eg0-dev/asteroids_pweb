@@ -57,19 +57,77 @@ gameLoop();
 
 function drawShip() {
   context.save();
-
   context.translate(ship.x, ship.y);
   context.rotate(ship.angle);
 
+  // Cuerpo principal
   context.beginPath();
-  context.moveTo(20, 0);
-  context.lineTo(-10, -10);
-  context.lineTo(-10, 10);
+  context.moveTo(50, 0);
+  context.lineTo(-20, -18);
+  context.lineTo(-10, 0);
+  context.lineTo(-20, 18);
   context.closePath();
-
-  context.strokeStyle = "deepskyblue";
-  context.lineWidth = 2;
+  context.fillStyle = "#1a0800";
+  context.strokeStyle = "#ff5500";
+  context.lineWidth = 1.5;
+  context.fill();
   context.stroke();
+
+  // Ala superior
+  context.beginPath();
+  context.moveTo(-10, -18);
+  context.lineTo(-30, -42);
+  context.lineTo(-18, -18);
+  context.closePath();
+  context.fillStyle = "#1a0800";
+  context.strokeStyle = "#ff6600";
+  context.lineWidth = 1.5;
+  context.fill();
+  context.stroke();
+
+  // Ala inferior
+  context.beginPath();
+  context.moveTo(-10, 18);
+  context.lineTo(-30, 42);
+  context.lineTo(-18, 18);
+  context.closePath();
+  context.fillStyle = "#1a0800";
+  context.strokeStyle = "#ff6600";
+  context.lineWidth = 1.5;
+  context.fill();
+  context.stroke();
+
+  // Cabina / detalle frontal
+  context.beginPath();
+  context.moveTo(30, 0);
+  context.lineTo(10, -7);
+  context.lineTo(6, 0);
+  context.lineTo(10, 7);
+  context.closePath();
+  context.fillStyle = "#2a1000";
+  context.strokeStyle = "#ff8800";
+  context.lineWidth = 1;
+  context.fill();
+  context.stroke();
+
+  // Línea dorsal
+  context.beginPath();
+  context.moveTo(-10, 0);
+  context.lineTo(40, 0);
+  context.strokeStyle = "rgba(255,119,0,0.5)";
+  context.lineWidth = 0.8;
+  context.stroke();
+
+  // Motor
+  context.beginPath();
+  context.ellipse(-16, 0, 5, 3, 0, 0, Math.PI * 2);
+  context.fillStyle = "rgba(255,68,0,0.8)";
+  context.fill();
+
+  context.beginPath();
+  context.ellipse(-20, 0, 3, 1.5, 0, 0, Math.PI * 2);
+  context.fillStyle = "rgba(255,170,0,0.95)";
+  context.fill();
 
   context.restore();
 }
