@@ -89,7 +89,24 @@ export function createAsteroid(canvasWidth, canvasHeight, ship) {
     mass: radius
   };
 }
-
+//Laser bullets 
+const LASER_SPEED    = 12;
+const LASER_LIFETIME = 55;  // frames antes de desaparecer
+const LASER_LENGTH   = 18;  // largo visual de la línea
+ 
+export function createLaser(ship) {
+  // Sale desde la punta de la nave (offset +50 en local X)
+  return {
+    x:        ship.x + Math.cos(ship.angle) * 50,
+    y:        ship.y + Math.sin(ship.angle) * 50,
+    dx:       Math.cos(ship.angle) * LASER_SPEED,
+    dy:       Math.sin(ship.angle) * LASER_SPEED,
+    angle:    ship.angle,
+    length:   LASER_LENGTH,
+    life:     LASER_LIFETIME,
+    opacity:  1
+  };
+}
 // Update functions 
 
 export function updateShip(ship, keys, canvasWidth, canvasHeight) {
@@ -151,5 +168,22 @@ export function handleAsteroidCollisions(asteroids) {
         b.y += moveY;
       }
     }
+  }
+}
+export function updateLasers(lasers, canvasWidth, canvasHeight) {
+  for (let i = lasers.length - 1; i >= 0; i--) {
+    const l = lasers[i];
+    l.x      += l.dx;
+    l.y      += l.dy;
+    l.life--;
+    l.opacity = l.life / LASER_LIFETIME;
+ 
+    // Continuidad de los disparos a traves de los bordes
+    if (l.x < 0)             l.x = canvasWidth;
+    if (l.x > canvasWidth)   l.x = 0;
+    if (l.y < 0)             l.y = canvasHeight;
+    if (l.y > canvasHeight)  l.y = 0;
+ 
+    if (l.life <= 0) lasers.splice(i, 1);
   }
 }

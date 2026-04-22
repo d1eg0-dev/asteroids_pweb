@@ -138,6 +138,44 @@ function _drawAsteroidDetails(ctx, asteroid) {
   );
   ctx.stroke();
 }
+export function drawLasers(ctx, lasers) {
+  for (const l of lasers) {
+    ctx.save();
+ 
+    //  Capa externa de luz del laser
+    ctx.beginPath();
+    ctx.moveTo(l.x, l.y);
+    ctx.lineTo(
+      l.x - Math.cos(l.angle) * l.length,
+      l.y - Math.sin(l.angle) * l.length
+    );
+    ctx.strokeStyle = `rgba(255, 120, 0, ${l.opacity * 0.35})`;
+    ctx.lineWidth   = 5;
+    ctx.lineCap     = "round";
+    ctx.stroke();
+ 
+    // Nucleo brillante — linea central blanco-naranja
+    ctx.beginPath();
+    ctx.moveTo(l.x, l.y);
+    ctx.lineTo(
+      l.x - Math.cos(l.angle) * l.length,
+      l.y - Math.sin(l.angle) * l.length
+    );
+    ctx.strokeStyle = `rgba(255, 220, 100, ${l.opacity})`;
+    ctx.lineWidth   = 2;
+    ctx.lineCap     = "round";
+    ctx.stroke();
+ 
+    // Punto de impacto — destello en la punta
+    ctx.beginPath();
+    ctx.arc(l.x, l.y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 180, ${l.opacity})`;
+    ctx.fill();
+ 
+    ctx.restore();
+  }
+}
+
 
 export function drawInfo(ctx) {
   ctx.fillStyle = "white";
